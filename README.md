@@ -19,13 +19,13 @@ Spring的Controller默认是Singleton的，这意味着每个请求过来，系�
 
 ## 代码实现
 根据学号和年级查询成绩信息
-```
+```java
 public interface ScoreRepo extends JpaRepository<Score, Long> {
     Optional<Score> findByUidAndAndClassId(String uid, String classId);
 }
 ```
 ContextHolder类用于保存缓存信息
-```
+```java
 public class ContextHolder {
     private static ThreadLocal<ContextInfo> threadLocal = new ThreadLocal<>();
 
@@ -80,7 +80,7 @@ public class ContextHolder {
 ```
 
 查询时如果缓存中有值直接取出，如果没有先从DB查询再放入缓存
- ```
+ ```java
 @Service
 public class ThreadLocalCacheService {
 
@@ -102,7 +102,7 @@ public class ThreadLocalCacheService {
 ```
 
 这里为了模拟重复查询，使用for循环对DB重复查询10次
-   ```
+```java
 @Override
     public ScoreVO queryScoreOne(String uid, String classId) {
         Optional<Score> score = cacheService.queryScore(uid, classId);
@@ -119,7 +119,7 @@ public class ThreadLocalCacheService {
 ```
 ## 效果测试
 1. 查询结果测试
- ```
+```java
 @Test
     public void testQueryScore(){
         String uid = "12345";
